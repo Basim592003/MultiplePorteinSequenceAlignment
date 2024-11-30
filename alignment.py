@@ -19,7 +19,7 @@ def run_clustalw(fasta_file):
     print(f"ClustalW guide tree file expected: {guide_tree_file}")
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    clustalw2 = os.path.join(script_dir, r"bin\clustalw2.exe")
+    clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
     command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
     subprocess.run(command, shell=True, check=True)
     
@@ -49,7 +49,7 @@ def run_muscle(fasta_file):
 
     try:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        muscle_exe = os.path.join(script_dir, r"bin\muscle3.8.31_i86win32.exe")
+        muscle_exe = os.path.join(script_dir, r"bin\muscle3.8.31_i86win32")
         command = [muscle_exe, '-in', fasta_file, '-out', output_file_path]
         result = subprocess.run(command, capture_output=True, text=True)
         
@@ -70,7 +70,7 @@ def generate_tree_with_fasttree(alignment_file):
     guide_tree_file = re.sub(r"\.aln$", ".dnd", alignment_file)
     print(f"FastTree guide tree file created: {guide_tree_file}")
     
-    fasttree_exe = r"bin\FastTree.exe"  # Replace with full path if FastTree is not in PATH
+    fasttree_exe = r"bin\FastTree"  # Replace with full path if FastTree is not in PATH
 
     command = [fasttree_exe, "-out", guide_tree_file, alignment_file]
     result = subprocess.run(command, capture_output=True, text=True)
