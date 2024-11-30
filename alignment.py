@@ -21,7 +21,11 @@ def run_clustalw(fasta_file):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
     command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
-    subprocess.run(command, shell=True, check=True)
+    print(f"Running command: {command}")
+    try :
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
     
     if os.path.exists(output_file_path):
         with open(output_file_path, "r") as file:
