@@ -19,8 +19,16 @@ def run_clustalw(fasta_file):
         print(f"ClustalW guide tree file expected: {guide_tree_file}")
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        # Platform-specific handling for ClustalW executable
-        clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
+        if platform.system() == 'Windows':
+            # On Windows, use the Windows-specific executable
+            clustalw2 = os.path.join(script_dir, "bin", "clustalw2.exe")
+        elif platform.system() == 'Linux':
+            # On Linux, use the Linux-specific executable
+            clustalw2 = os.path.join(script_dir, "bin", "clustalw2")
+        else:
+            raise ValueError("Unsupported operating system")
+        
+        #clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
         command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
         print(f"Running command: {command}")
     
