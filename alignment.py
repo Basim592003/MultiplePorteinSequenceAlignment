@@ -11,19 +11,19 @@ def run_clustalw(fasta_file):
     # Create temporary file for alignment output
     with tempfile.NamedTemporaryFile(suffix='.aln', delete=False) as temp_aln:
         output_file_path = temp_aln.name
-
-    # ClustalW will create the guide tree file with .dnd extension in the same location as input
-    guide_tree_file = os.path.splitext(fasta_file)[0] + '.dnd'
-
-    print(f"ClustalW alignment file created: {output_file_path}")
-    print(f"ClustalW guide tree file expected: {guide_tree_file}")
-
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Platform-specific handling for ClustalW executable
-    clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
-    command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
-    print(f"Running command: {command}")
     try:
+        # ClustalW will create the guide tree file with .dnd extension in the same location as input
+        guide_tree_file = os.path.splitext(fasta_file)[0] + '.dnd'
+
+        print(f"ClustalW alignment file created: {output_file_path}")
+        print(f"ClustalW guide tree file expected: {guide_tree_file}")
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Platform-specific handling for ClustalW executable
+        clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
+        command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
+        print(f"Running command: {command}")
+    
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
