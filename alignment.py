@@ -3,9 +3,9 @@ import os
 import io
 import re
 import tempfile
+import platform
 from Bio import AlignIO
 from visualization import format_newick_string
-
 
 def run_clustalw(fasta_file):
     # Create temporary file for alignment output
@@ -19,10 +19,15 @@ def run_clustalw(fasta_file):
     print(f"ClustalW guide tree file expected: {guide_tree_file}")
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Platform-specific handling for ClustalW executable
     clustalw2 = os.path.join(script_dir, r"bin\clustalw2")
     command = f"{clustalw2} -INFILE={fasta_file} -OUTFILE={output_file_path}"
-    subprocess.run(command, shell=True, check=True)
-    
+    print(f"Running command: {command}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+
     if os.path.exists(output_file_path):
         with open(output_file_path, "r") as file:
             alignment_data = io.StringIO(file.read())
@@ -39,7 +44,6 @@ def run_clustalw(fasta_file):
         print("Error: Alignment output file was not created.")
         return None, None, None
 
-
 def run_muscle(fasta_file):
     # Create temporary files for MUSCLE alignment output
     with tempfile.NamedTemporaryFile(suffix='.aln', delete=True) as temp_aln:
@@ -48,8 +52,20 @@ def run_muscle(fasta_file):
     print(f"MUSCLE alignment file created: {output_file_path}")
 
     try:
+        # Determine the platform (Windows or Linux)
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        muscle_exe = os.path.join(script_dir, r"bin\muscle3.8.31_i86win32")
+        if platform.system() == 'Windows':
+            # On Windows, use the Windows-specific executable
+            muscle_exe = os.path.join(script_dir, "bin", "muscle3.8.31_i86win32.exe")
+        elif platform.system() == 'Linux':
+            # On Linux, use the Linux-specific executable
+            muscle_exe = os.path.join(script_dir, "bin", "muscle3.8.31_i86linux64")
+        else:
+            raise ValueError("Unsupported operating system")
+
+        print(f"Using MUSCLE executable: {muscle_exe}")
+        
+        # Run the MUSCLE command
         command = [muscle_exe, '-in', fasta_file, '-out', output_file_path]
         result = subprocess.run(command, capture_output=True, text=True)
         
@@ -70,6 +86,7 @@ def generate_tree_with_fasttree(alignment_file):
     guide_tree_file = re.sub(r"\.aln$", ".dnd", alignment_file)
     print(f"FastTree guide tree file created: {guide_tree_file}")
     
+    # Set path to FastTree executable (adjust as needed)
     fasttree_exe = r"bin\FastTree"  # Replace with full path if FastTree is not in PATH
 
     command = [fasttree_exe, "-out", guide_tree_file, alignment_file]
