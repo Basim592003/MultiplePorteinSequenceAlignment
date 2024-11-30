@@ -53,7 +53,8 @@ def run_muscle(fasta_file):
 
     try:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        muscle_exe = os.path.join(script_dir, r"bin\muscle3.8.31_i86win32")
+        print("Contents of bin directory:", os.listdir(os.path.join(script_dir, "bin")))
+        muscle_exe = os.path.join(script_dir, "bin", "muscle3.8.31_i86win32")
         command = [muscle_exe, '-in', fasta_file, '-out', output_file_path]
         result = subprocess.run(command, capture_output=True, text=True)
         
