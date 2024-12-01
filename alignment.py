@@ -68,6 +68,7 @@ def run_muscle(fasta_file):
         elif platform.system() == 'Linux':
             # On Linux, use the Linux-specific executable
             muscle_exe = "muscle3.8.31_i86linux64"
+            #
         else:
             raise ValueError("Unsupported operating system")
 
