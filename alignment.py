@@ -18,13 +18,13 @@ def run_clustalw(fasta_file):
         print(f"ClustalW alignment file created: {output_file_path}")
         print(f"ClustalW guide tree file expected: {guide_tree_file}")
 
-        script_dir = os.path.dirname(os.path.abspath(__file__))
+        #script_dir = os.path.dirname(os.path.abspath(__file__))
         if platform.system() == 'Windows':
             # On Windows, use the Windows-specific executable
-            clustalw2 = os.path.join(script_dir, "bin", "clustalw2.exe")
+            clustalw2 = r"bin\clustalw2.exe"
         elif platform.system() == 'Linux':
             # On Linux, use the Linux-specific executable
-            clustalw2 = os.path.join(script_dir, "bin", "clustalw2")
+            clustalw2 = r"bin\clustalw2"
         else:
             raise ValueError("Unsupported operating system")
         
@@ -64,10 +64,10 @@ def run_muscle(fasta_file):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         if platform.system() == 'Windows':
             # On Windows, use the Windows-specific executable
-            muscle_exe = os.path.join(script_dir, "bin", "muscle3.8.31_i86win32.exe")
+            muscle_exe = r"bin\muscle3.8.31_i86win32.exe"
         elif platform.system() == 'Linux':
             # On Linux, use the Linux-specific executable
-            muscle_exe = os.path.join(script_dir, "bin", "muscle3.8.31_i86linux64")
+            muscle_exe = r"bin\muscle3.8.31_i86linux64"
         else:
             raise ValueError("Unsupported operating system")
 
