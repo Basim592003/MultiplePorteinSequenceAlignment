@@ -71,13 +71,6 @@ MVLSGEDKSNIKAAWGKIGGHGAEYGAEALERMFASFPTTKTYFPHFDVSHGSAQVKGHG
 - Structural analysis
 - Drug discovery applications
 
-## Author
-
-**Shaikh Basim Mushtaque Ahmed**  
-Biomedical Engineering - Information Systems in Medicine  
-Faculty of Biomedical Engineering, Zabrze, 2024  
-Supervisor: Anna Tamulewicz, PhD Eng.
-
 ## References
 
 - MUSCLE: https://drive5.com/muscle/
