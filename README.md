@@ -80,4 +80,4 @@ MVLSGEDKSNIKAAWGKIGGHGAEYGAEALERMFASFPTTKTYFPHFDVSHGSAQVKGHG
 
 ---
 
-**Note**: This application is designed for educational and research purposes.Retry
+**Note**: This application is designed for educational and research purposes.
